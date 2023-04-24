@@ -1,0 +1,57 @@
+﻿@model IEnumerable<OnlineDiscussion.Models.TopicViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center">Topics</h1>
+
+<p class="text-right">
+    <a asp-action="Create" class="btn btn-success">New Topic</a>
+</p>
+<Br />
+<table border="2" class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>
+                Topic Name
+            </th>
+            <th>
+                Topic Description
+            </th>
+            <th>
+                Created Date
+            </th>
+            <th>
+                Created By
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TopicName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user.Email)
+                </td>
+            <td>
+                    <a asp-action="Index" asp-controller="FriendsViews" class="btn btn-info" asp-route-id="@item.TopicId">Friend</a> |
+                    <a asp-action="Index" asp-controller="CommentViews"  class="btn btn-success" asp-route-id="@item.TopicId">Comment</a> |
+
+                    <a asp-action="Edit" asp-route-id="@item.TopicId" class="btn btn-primary">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.TopicId" class="btn btn-warning">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TopicId" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

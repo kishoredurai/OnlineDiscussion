@@ -1,0 +1,49 @@
+﻿@model IEnumerable<OnlineDiscussion.Models.FriendsView>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Friends List</h1>
+
+<p>
+    <a class="btn btn-success" asp-action="Create" asp-route-id="@ViewData["topicid"]">Add Friends</a>
+</p>
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>
+               Friend Email Address
+            </th>
+            <th>
+               Topic Name
+            </th>
+            <th>
+               Created Date
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model!=null){
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Topic.TopicName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Topic.CreatedDate)
+                    </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FriendId" class="btn btn-primary">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FriendId" class="btn btn-warning">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FriendId" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+        }
+    </tbody>
+</table>

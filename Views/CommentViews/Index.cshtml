@@ -1,0 +1,41 @@
+﻿@model IEnumerable<OnlineDiscussion.Models.CommentView>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center">Comments on Topic</h1>
+
+<p>
+    <a class="btn btn-success" asp-action="Create" asp-route-id="@ViewData["topicid"]">Add Comment</a>
+</p>
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>
+               Comments
+            </th>
+            <th>
+               Posted Date
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CommentText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.posteddate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CommentId" class="btn btn-primary">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CommentId" class="btn btn-warning">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CommentId" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
