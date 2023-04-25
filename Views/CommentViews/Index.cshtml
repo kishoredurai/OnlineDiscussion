@@ -4,6 +4,53 @@
     ViewData["Title"] = "Index";
 }
 
+
+
+<style>
+    .text-right {
+        text-align: right;
+    }
+</style>
+<div class="container">
+    <h1 class="text-center">Comments On Topic</h1>
+    <div class="text-right">
+        <a asp-action="Create" asp-route-id="@ViewData["topicid"]" class="btn btn-success btn-sm">new Comment</a>
+    </div>
+</div>
+<hr />
+<div class="container">
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-md-4">
+                <div class="card">
+                   
+                    <div class="card-body">
+                        <p class="card-text"> @Html.DisplayFor(modelItem => item.CommentText)</p>
+                        <p class="card-text"><b> Posted on:</b>  @Html.DisplayFor(modelItem => item.posteddate)</p>
+                        <p class="card-text"><b>Created by:</b> @Html.DisplayFor(modelItem => item.user.Email)</p>
+                        <p>
+
+
+                            <a asp-action="Edit" class="btn btn-primary btn-sm" asp-route-id="@item.CommentId">📝</a> |
+                            <a asp-action="Details" class="btn btn-warning btn-sm" asp-route-id="@item.CommentId">👁</a> |
+                            <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.CommentId">❌</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+
+    </div>
+</div>
+
+
+
+@*
 <h1 class="text-center">Comments on Topic</h1>
 
 <p>
@@ -18,6 +65,9 @@
             <th>
                Posted Date
             </th>
+            <th>
+               Name
+            </th>
             <th>Action</th>
         </tr>
     </thead>
@@ -30,6 +80,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.posteddate)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user.Email)
+                </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CommentId" class="btn btn-primary">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.CommentId" class="btn btn-warning">Details</a> |
@@ -39,3 +92,4 @@
 }
     </tbody>
 </table>
+*@

@@ -3,7 +3,11 @@
 @{
     ViewData["Title"] = "Delete";
 }
-
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div id="cards">
 <h1>Delete</h1>
 
 <h3>Are you sure you want to delete this?</h3>
@@ -22,6 +26,16 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="FriendId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index" asp-controller="TopicView">Back to List</a>
+        <a asp-action="Index" class="btn btn-warning" asp-controller="TopicView">Back</a>
     </form>
+</div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
 </div>

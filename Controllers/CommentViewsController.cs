@@ -30,7 +30,10 @@ namespace OnlineDiscussion.Controllers
             ViewData["topicid"] = id;
             Console.WriteLine("id :"+ViewData["topicid"]);
               return _context.CommentView != null ? 
-                          View(await _context.CommentView.ToListAsync()) :
+                          View(await _context.CommentView
+                          .Include(x =>x.user)
+                          .Where(x =>x.topic.TopicId == id)
+                          .ToListAsync()) :
                           Problem("Entity set 'OnlineDiscussionContext.CommentView'  is null.");
         }
 
@@ -55,7 +58,7 @@ namespace OnlineDiscussion.Controllers
         // GET: CommentViews/Create
         public IActionResult Create(int? id)
         {
-            TempData["topicids"] = id;
+            TempData["iid"] = id;
             return View();
         }
 
@@ -66,30 +69,31 @@ namespace OnlineDiscussion.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CommentId,CommentText,posteddate")] CommentView commentView)
         {
-
+            int id = Convert.ToInt32(TempData["iid"]);
+            Console.WriteLine(id);
             System.Security.Claims.ClaimsPrincipal currentUser = this.User;
             var userID = await _userManager.GetUserAsync(User);
 
             commentView.user = userID;
             try
             {
-                var topicS = _context.TopicViewModel.Where(u => u.TopicId == (int)TempData["topicids"]).FirstOrDefault();
+                var topicS = _context.TopicViewModel.Where(u => u.TopicId == id).FirstOrDefault();
                 Console.WriteLine(topicS);
-                 commentView.topic = topicS;
+                commentView.topic = topicS;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
 
-           
+
 
             _context.Add(commentView);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "CommentViews", new { id = (int)TempData["topicids"] });
+            return RedirectToAction("Index", "CommentViews", new { id = id });
 
 
-                return View(commentView);
+            return View();
         }
 
         // GET: CommentViews/Edit/5
